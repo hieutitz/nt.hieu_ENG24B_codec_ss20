@@ -1,4 +1,4 @@
-#include <stdio.h>
+     #include <stdio.h>
 #include <string.h>
 
 typedef struct {
@@ -152,14 +152,6 @@ void capNhatSanPham(SanPham dsSanPham[], int soLuongSanPham) {
     }
     printf("Khong tim thay ma san pham!\n");
 }
-
-            if (dsSanPham[i].soLuong == 0) {
-                printf("San pham %s da het hang!\n", dsSanPham[i].tenSanPham);
-            }
-            return;
-        }
-    }
-    printf("Khong tim thay ma san pham!\n");
-}
+    
 
 
