@@ -13,9 +13,6 @@ void nhapThongTinSanPham(SanPham dsSanPham[], int *soLuongSanPham, float *doanhT
 void hienThiSanPham(SanPham dsSanPham[], int soLuongSanPham);
 void nhapSanPham(SanPham dsSanPham[], int *soLuongSanPham, float *doanhThu);
 void capNhatSanPham(SanPham dsSanPham[], int soLuongSanPham);
-void sapXepSanPham(SanPham dsSanPham[], int soLuongSanPham, int tangDan);
-void timKiemSanPham(SanPham dsSanPham[], int soLuongSanPham);
-void banSanPham(SanPham dsSanPham[], int *soLuongSanPham, float *doanhThu);
 
 int main() {
     SanPham dsSanPham[100];
@@ -51,17 +48,11 @@ int main() {
                 capNhatSanPham(dsSanPham, soLuongSanPham);
                 break;
             case 5: {
-                int tangDan;
-                printf("Nhap 1 de sap xep tang, 0 de sap xep giam: ");
-                scanf("%d", &tangDan);
-                sapXepSanPham(dsSanPham, soLuongSanPham, tangDan);
                 break;
             }
             case 6:
-                timKiemSanPham(dsSanPham, soLuongSanPham);
                 break;
             case 7:
-                banSanPham(dsSanPham, &soLuongSanPham, &doanhThu);
                 break;
             case 8:
                 printf("Doanh thu hien tai: %.2f\n", doanhThu);
@@ -162,60 +153,6 @@ void capNhatSanPham(SanPham dsSanPham[], int soLuongSanPham) {
     printf("Khong tim thay ma san pham!\n");
 }
 
-void sapXepSanPham(SanPham dsSanPham[], int soLuongSanPham, int tangDan) {
-    for (int i = 0; i < soLuongSanPham - 1; i++) {
-        for (int j = i + 1; j < soLuongSanPham; j++) {
-            if ((tangDan && dsSanPham[i].giaBan > dsSanPham[j].giaBan) || 
-                (!tangDan && dsSanPham[i].giaBan < dsSanPham[j].giaBan)) {
-                SanPham temp = dsSanPham[i];
-                dsSanPham[i] = dsSanPham[j];
-                dsSanPham[j] = temp;
-            }
-        }
-    }
-    printf("Sap xep thanh cong!\n");
-}
-
-void timKiemSanPham(SanPham dsSanPham[], int soLuongSanPham) {
-    char tenSanPham[50];
-    printf("Nhap ten san pham can tim: ");
-    getchar();
-    fgets(tenSanPham, sizeof(tenSanPham), stdin);
-    tenSanPham[strcspn(tenSanPham, "\n")] = '\0';
-    for (int i = 0; i < soLuongSanPham; i++) {
-        if (strstr(dsSanPham[i].tenSanPham, tenSanPham)) {
-            printf("Tim thay san pham:\n");
-            printf("Ma san pham: %s\n", dsSanPham[i].maSanPham);
-            printf("Ten san pham: %s\n", dsSanPham[i].tenSanPham);
-            printf("Gia nhap: %.2f\n", dsSanPham[i].giaNhap);
-            printf("Gia ban: %.2f\n", dsSanPham[i].giaBan);
-            printf("So luong: %d\n", dsSanPham[i].soLuong);
-            return;
-        }
-    }
-    printf("Khong tim thay san pham!\n");
-}
-
-void banSanPham(SanPham dsSanPham[], int *soLuongSanPham, float *doanhThu) {
-    char maSanPham[20];
-    int soLuongBan;
-    printf("Nhap ma san pham can ban: ");
-    scanf("%s", maSanPham);
-    for (int i = 0; i < *soLuongSanPham; i++) {
-        if (strcmp(dsSanPham[i].maSanPham, maSanPham) == 0) {
-            printf("Nhap so luong ban: ");
-            scanf("%d", &soLuongBan);
-
-            if (soLuongBan > dsSanPham[i].soLuong) {
-                printf("So luong ban vuot qua so luong trong kho!\n");
-                return;
-            }
-
-            dsSanPham[i].soLuong -= soLuongBan;
-            *doanhThu += soLuongBan * dsSanPham[i].giaBan;
-            printf("Ban thanh cong!\n");
-
-            // N?u s? lu?ng s?n ph?m còn l?i b?ng 0
             if (dsSanPham[i].soLuong == 0) {
                 printf("San pham %s da het hang!\n", dsSanPham[i].tenSanPham);
             }
